@@ -1,51 +1,9 @@
-/*var entries = [
-{"id":1, "title":"Hello World!", "body":"This is the body of my blog entry. Sooo exciting.", "published":"6/2/2013"},
-{"id":2, "title":"Eggs for Breakfast", "body":"Today I had eggs for breakfast. Sooo exciting.", "published":"6/3/2013"},
-{"id":3, "title":"Beer is Good", "body":"News Flash! Beer is awesome!", "published":"6/4/2013"},
-{"id":4, "title":"Mean People Suck", "body":"People who are mean aren't nice or fun to hang around.", "published":"6/5/2013"},
-{"id":5, "title":"I'm Leaving Technology X and You Care", "body":"Let me write some link bait about why I'm not using a particular technology anymore.", "published":"6/10/2013"},
-{"id":6, "title":"Help My Kickstarter", "body":"I want a new XBox One. Please fund my Kickstarter.", "published":"6/12/2013"}];
-*/
+
+
 var mongoose = require('mongoose');
 var Entry = mongoose.model('Entry');
-
+var Comment = mongoose.model('Comment');
 var LocalStrategy   = require('passport-local').Strategy;
-
-
-
-/*var post1 = new Entry({
-		"id" : 1,
-		"title" : "Mehul PAtel",
-		"post": "Best",
-		"published": Date.now()
-	});
-
-post1.save(function(err, savedUser){
-	if(err) {
-		console.log("D");
-	}
-	else {
-		console.log(savedUser);
-	}
-});
-*/
-
-
-
-
-/*var admin = new userSchema({
-	username : "mehulpatel",
-	password: "hello"
-
-});
-
-admin.save(function(err, adminSaved){
-	if(!err){
-		console.log(adminSaved);
-	}
-});
-
-*/
 
 
 exports.deletedata = function(deleteid) {
@@ -56,23 +14,70 @@ exports.deletedata = function(deleteid) {
 
 }
 
+
+
 exports.getBlogEntries = function(opid) {
 	var list = [];
+    var i;
 	Entry.find({'opid' : opid}, function(err, entries) {
 			
 			
-            if (!err){ 
-            	for(i = 1; i < entries.length; i++ ) {
-                list.push(entries[i]);
+            /*if (!err){ 
+               
+
+            	for(i = 0; i < entries.length; i++ ) {
+                    list.push(entries[i]);
+                    //console.log(list[i-1]);
+                    Comment.find({'postid': list[i].id},function(err2, comments){
+                        console.log();
+                        console.log(comments);
+                        
+                        if(err2){
+                           
+                            console.log("asf");
+                            
+
+                        }
+                        else {
 
 
-            } }
-            else {console.log("err");}
+                            
+                            list[i].commentst = comments;
+                           
+                            //list.push(entries[i]);
+                         }
+                    });
+                
+
+
+                 }
+            }*/
+
+            entries.forEach( function(currentEntry){
+                
+                Comment.find({'postid' : currentEntry.id}, function(err2, comments){
+                    if(err2) {
+                        list.push(currentEntry);
+                    }
+                    else {
+                        currentEntry.commentst = comments
+                        list.push(currentEntry);
+                    }
+
+                });
+
+
+            });
+            //else {console.log("err");}
 
                 
           });
 	//console.log(list);
 	return list;
+
+
+
+
 
 
 };
@@ -83,12 +88,24 @@ exports.getBlogEntriesALL = function() {
             
             
             if (!err){ 
-                for(i = 1; i < entries.length; i++ ) {
-                listALL.push(entries[i]);
+               
+               entries.forEach( function(currentEntry){
 
+                    Comment.find({'postid' : currentEntry.id}, function(err2, comments) {
+                            if(err2)   {
+                                listALL.push(currentEntry);
+                            }     
+                            else {
+                                
 
-            } 
-         console.log(listALL);}
+                                currentEntry.commentst = comments;
+                                listALL.push(currentEntry);
+                            }                 
+
+                    });
+
+               });
+         }
             else {console.log("err");}
 
                 

@@ -1,0 +1,76 @@
+
+{{#if user}}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<h1>Blog!</h1>
+<div id="header" class="skel-panels-fixed">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="avatar.jpg" alt="" /></span>
+							<h1 id="title">{{user.username}}</h1>
+							<span class="byline">Hyperspace Engineer</span>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-home">Info</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Feed</span></a></li>
+								<li><a href="#about" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">Posts</span></a></li>
+								<li><a href="#contact" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Inbox</span></a></li>
+								<li><a href="/logout" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Logout</span></a></li>
+							</ul>
+						</nav>
+						
+				</div>
+				
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="#" class="fa fa-twitter solo"><span>Twitter</span></a></li>
+							<li><a href="#" class="fa fa-facebook solo"><span>Facebook</span></a></li>
+							<li><a href="#" class="fa fa-github solo"><span>Github</span></a></li>
+							<li><a href="#" class="fa fa-dribbble solo"><span>Dribbble</span></a></li>
+							<li><a href="#" class="fa fa-envelope solo"><span>Email</span></a></li>
+						</ul>
+				
+				</div>
+			
+			</div>
+ <form method="post" action="/getpost" accept-charset="UTF-8" id="postform">
+ 	<select id="selecttag" name="typeans">
+  		<option value="I Need a" name="need">I Need a</option>
+ 		 <option value="I Have a" name="have">I Have a </option>
+  	</select>
+	<input id="blogposttitle" type="text" placeholder="title" name = "posttitle" /> 
+	<input id="thepost" type="text" placeholder="The entry" name="postentry" />
+	
+	<input type="submit" class="button"/>
+
+</form>
+
+<!--<a href="/login"> Sing in </a>-->
+
+<div id="feed">
+{{user.username}}
+{{#each entries}}
+<p id="theposts" class="theposts1">
+
+<a href="/article/{{id}}" id="link1" ><span id="type1">{{type}}</span> {{title}}   </a><br/>
+Published: {{published}} OP: 
+ 
+<a href="/delete/{{id}}"id="link1"> Delete</a> 
+</p>
+{{/each}}
+</div>
+
+{{else}}
+	<p> asdf</p>
+{{/if}}

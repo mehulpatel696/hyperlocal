@@ -2,6 +2,7 @@
 //requiring the db.js file
 require('./db');
 
+
 //required all the modules and shit
 var flash = require('connect-flash');
 var express = require('express');
@@ -13,26 +14,18 @@ var Entry = mongoose.model('Entry');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
+var Schema = mongoose.Schema; 
 
-
-
-
-
-
-
-
-
-
-//initializing the user model
-var userSchema = mongoose.Schema({
+var userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true},
-  accessToken: { type: String } // Used for Remember Me - need to work on it a bit thouugh
+  accessToken: { type: String },
+  passReqToCallback : Boolean // Used for Remember Me - need to work on it a bit thouugh
 });
 
 
-//salts/hashes the password entered 
+//salts/hashes the password entered  
 userSchema.pre('save', function(next) {
 	var user = this;
 
@@ -70,6 +63,7 @@ userSchema.methods.generateRandomToken = function () {
 };
 
 // Seed a user
+
 var User = mongoose.model('User', userSchema);
 
 //setting up passport 
@@ -188,11 +182,11 @@ app.get('/about', function(req, res) {
 
 //article page render with id dir. to uniquify every post 
 app.get('/article/:id', function(req, res) {
-	
+	var usersp = req.user;
 	
 	Entry.find( { "_id": req.params.id}, function(err, mehul){
-			console.log(mehul);
-			res.render('article',{title: mehul[0].title, blog:mehul[0]});
+			//console.log(mehul);
+			res.render('article',{title: mehul[0].title, blog:mehul[0], user : usersp});
 	}); 
 });
 //similar to article one, but delete. 
@@ -203,7 +197,7 @@ app.get('/delete/:id', function(req, res) {
 
 app.get('/feed', function(req, res){
 
-	res.render('feed', {title : "News Feed", entries:blogEngine.getBlogEntriesALL(), user: req.user})
+	res.render('feed', {title : "News Feed", entries: blogEngine.getBlogEntriesALL(), user: req.user})
 
 });
 
@@ -237,23 +231,31 @@ app.post('/getpost', function(req, res) {new Entry({
 		"username" : req.user.username
 	}).save(function(err, todo, count){
 		res.redirect('/');
-		console.log(todo);
+		//console.log(todo);
 	});
 });
+
+
+//comment system
 var Comment = mongoose.model("Comment");
 
 app.post('/comment', function(req, res) {
-console.log(req.user);
+ 
+console.log("========================================")
 	new Comment({
 		
 		"thecomment" : req.body.comment,
-		"postid" : "af",
-		"posterid" : req.user.id
+		"postid" : req.body.id,
+		"poster" : req.user.username
 	}).save(function(err, todo, count){
-		res.redirect('/');
+		res.redirect('/feed');
 		console.log(todo);
 	});
+
+
 });
+
+
 
 
 
@@ -278,20 +280,54 @@ app.post('/login', function(req, res, next) {
 });
 
 
+
+/*app.post('/signup', passport.authenticate('local-signup', {
+		successRedirect : '/loginform', // redirect to the secure profile section
+		failureRedirect : '/signupform', // redirect back to the signup page if there is an error
+		failureFlash : true // allow flash messages
+	}));
+*/
 app.post('/signup', function(req, res){
-	console.log(req.body.username);
-	console.log(req.body.email);
-	console.log(req.body.password);
-	new User  ({
-		"username" : req.body.username,
-		"email" : req.body.email,
-		"password" : req.body.password
-	}).save(function(err, user) {
-		if(!err) {console.log(user);
-			res.redirect('/');}
-		else {console.log("Error");}
-	});
+	var mehul = false;  
+	User.find({username : req.body.username}, function(err, user){
+		
+		if(err !== "null") {
+			res.redirect("/signupform");
+			console.log("adsf");
+			}
+
+		else {
+			console.log("Phase 2");
+			User.find({email : req.body.email}, function(err, user){
+
+				if(!err) {
+					console.log("Phase 2");
+					res.redirect("/signupform");
+					}
+
+				else {
+					console.log("Phase 2");
+					new User  ({
+						"username" : req.body.username,
+						"email" : req.body.email,
+						"password" : req.body.password
+							}).save(function(err, user) {
+								if(!err) {console.log(user);
+								res.redirect('/loginform');}
+
+								else {console.log("Error");}
+						});
+
+					}
+
+				});
+			}
+
+		});
 });
+
+
+
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -300,7 +336,7 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  res.redirect('/login');
 }
 
 
@@ -379,7 +415,4 @@ app.post('/login', passport.authenticate('local-signup', {
         });        
 
     }));
-
-
-
 */

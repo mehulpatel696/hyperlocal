@@ -18,7 +18,7 @@ var Entry = new Schema({
 var comment = new Schema({
 	"thecomment" : String,
 	"postid" : String,
-	"posterid" : String
+	"posteruname" : String
 })
 
 var Message = new Schema({
@@ -43,6 +43,7 @@ var Message = new Schema({
 mongoose.model("Comment", comment);
 mongoose.model('Message', Message);
 mongoose.model('Entry', Entry);
+
 /*userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };

@@ -14,7 +14,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="avatar.jpg" alt="" /></span>
 							<h1 id="title">{{user.username}}</h1>
-							<span class="byline">Hyperspace Engineer</span>
+							<span class="byline">Expert Pooper</span>
 						</div>
 
 					<!-- Nav -->
@@ -63,8 +63,18 @@
 {{#each entries}}
 <p id="theposts" class="theposts1">
 
-<a href="/article/{{id}}" id="link1" ><span id="type1">{{type}}</span> {{title}}   </a><br/>
-Published: {{published}} OP: 
+	<a href="/article/{{id}}" id="link1" >
+		<span id="type1">{{type}}</span> {{title}}   
+	</a><br/>
+	{{#if commentst}}
+		{{#each commentst}}
+			<p id="thecomments"> {{thecomment}}  <b>{{posteruname}}</b></p>
+		{{/each}}
+	{{else}}
+			<p id="thecomment"> No Comments </p>
+	{{/if}}
+
+	Published: {{published}} OP: 
  
 <a href="/delete/{{id}}"id="link1"> Delete</a> 
 </p>
