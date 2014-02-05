@@ -320,22 +320,7 @@ app.post('/signup', function(req, res){
 	var mehul = false;  
 	User.find({username : req.body.username}, function(err, user){
 		
-		if(err !== "null") {
-			res.redirect("/signupform");
-			console.log("adsf");
-			}
-
-		else {
-			console.log("Phase 2");
-			User.find({email : req.body.email}, function(err, user){
-
-				if(!err) {
-					console.log("Phase 2");
-					res.redirect("/signupform");
-					}
-
-				else {
-					console.log("Phase 2");
+		
 					new User  ({
 						"username" : req.body.username,
 						"email" : req.body.email,
@@ -346,11 +331,6 @@ app.post('/signup', function(req, res){
 
 								else {console.log("Error");}
 						});
-
-					}
-
-				});
-			}
 
 		});
 });
