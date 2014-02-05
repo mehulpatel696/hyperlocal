@@ -26,7 +26,7 @@ var Message = new Schema({
 	"subject" : String,
 	"the message" : String,
 	"sender" : String,
-	"reciver" : String
+	"reciever" : String
 
 });
 

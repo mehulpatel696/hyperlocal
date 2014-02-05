@@ -60,13 +60,14 @@
 
 <div id="feed">
 {{#if entries}}
+<div id="theposts2">
 {{#each entries}}
 <p id="theposts" class="theposts1">
 
 <a href="/article/{{id}}" id="link1" ><span id="type1">{{type}}</span> {{title}}   </a><br/>
 	{{#if commentst}}
 		{{#each commentst}}
-			<p id="thecommentst">{{thecomment}}<b>{{posteruname}}</b></p>
+			<p id="thecommentst">{{thecomment}}<b><a href="/profile/{{posteruname}}"> {{posteruname}}</a></b></p>
 		{{/each}}
 	{{else}}
 			<p id="thecommentst">No Comment</p>
@@ -78,14 +79,16 @@
 	<form method="post" action="/comment" accept-charset="UTF-8"  >
 		<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
 		<input type="text"  name="comment" id="comment" placeholder="Reply"/>
-		<input type="submit" ></input>
+		<input type="submit" class="button" ></input>
 		
 	</form>
 </p>
+
+</div>
 {{/each}}
 </div>
 {{else}}
-	<p> No posts yes</p>
+	<p> No posts yet</p>
 {{/if}}
 {{else}}
 	<p> How did you get here/ go to <a href="/loginform">Log in </p>

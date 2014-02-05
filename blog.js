@@ -3,7 +3,9 @@
 var mongoose = require('mongoose');
 var Entry = mongoose.model('Entry');
 var Comment = mongoose.model('Comment');
+var Message = mongoose.model('Message');
 var LocalStrategy   = require('passport-local').Strategy;
+
 
 
 exports.deletedata = function(deleteid) {
@@ -14,11 +16,28 @@ exports.deletedata = function(deleteid) {
 
 }
 
+exports.getMessages = function(username) {
+    var messages = [];
+
+    Message.find({'reciever' : username}, function(err, messages) {
+
+        messages.forEach( function(message) {
+
+            messages.push(message);
+        });
+
+
+
+    });
+     return messages;
+
+}
+
 
 
 exports.getBlogEntries = function(opid) {
 	var list = [];
-    var i;
+    
 	Entry.find({'opid' : opid}, function(err, entries) {
 			
 			
@@ -33,7 +52,7 @@ exports.getBlogEntries = function(opid) {
                         console.log(comments);
                         
                         if(err2){
-                           
+                           s
                             console.log("asf");
                             
 

@@ -14,7 +14,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="avatar.jpg" alt="" /></span>
 							<h1 id="title">{{user.username}}</h1>
-							<span class="byline">Student</span>
+							<span class="byline">Expert Pooper</span>
 						</div>
 
 					<!-- Nav -->
@@ -61,7 +61,6 @@
 <div id="feed">
 
 {{#each entries}}
-<div id="theposts2">
 <p id="theposts" class="theposts1">
 
 	<a href="/article/{{id}}" id="link1" >
@@ -78,17 +77,7 @@
 	Published: {{published}} OP: 
  
 <a href="/delete/{{id}}"id="link1"> Delete</a> 
-<form method="post" action="/comment" accept-charset="UTF-8"  >
-		<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
-		<input type="text"  name="comment" id="comment" placeholder="Reply"/>
-		<input type="submit" class="button"></input>
-		
-	</form>
 </p>
-
-<br>
-</div>
-<br>
 {{/each}}
 </div>
 

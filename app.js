@@ -1,5 +1,11 @@
 
 //requiring the db.js file
+//plain old js
+
+
+
+
+
 require('./db');
 
 
@@ -23,6 +29,7 @@ var userSchema = new Schema({
   accessToken: { type: String },
   passReqToCallback : Boolean // Used for Remember Me - need to work on it a bit thouugh
 });
+
 
 
 //salts/hashes the password entered  
@@ -189,6 +196,25 @@ app.get('/article/:id', function(req, res) {
 			res.render('article',{title: mehul[0].title, blog:mehul[0], user : usersp});
 	}); 
 });
+
+
+
+app.get('/profile/:posteruname', function(req,res){
+  User.find({"username" : req.params.posteruname}, function(err, theuser){
+    if(!err) {
+      theuser.push("Hello")
+      
+      console.log(theuser[0]);
+      res.render('profile', {title: theuser[0].username, theoneuser : theuser[0], entries:blogEngine.getBlogEntries(theuser[0].id), user:  req.user})
+    }
+    else {
+      res.render('404')
+    }
+
+  });
+  
+
+});
 //similar to article one, but delete. 
 app.get('/delete/:id', function(req, res) {
 	blogEngine.deletedata(req.params.id);
@@ -204,7 +230,7 @@ app.get('/feed', function(req, res){
 
 app.get('/inbox', function(req, res){
 
-	res.render('inbox', {title : "Messages", messages:blogEngine.getMessages(req.user.id), user: req.user})
+	res.render('inbox', {title : "Messages", messages:blogEngine.getMessages(req.user.username), user: req.user})
 
 });
 
@@ -242,18 +268,21 @@ var Comment = mongoose.model("Comment");
 app.post('/comment', function(req, res) {
  
 console.log("========================================")
+console.log(req.user);
 	new Comment({
-		
 		"thecomment" : req.body.comment,
 		"postid" : req.body.id,
-		"poster" : req.user.username
+		"posteruname": req.user.username
+
 	}).save(function(err, todo, count){
+
 		res.redirect('/feed');
 		console.log(todo);
 	});
 
 
 });
+
 
 
 

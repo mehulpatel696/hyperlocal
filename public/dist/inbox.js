@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
-	//$('#searchbox').keyup(function(){
-		alert("adf");
+	$('#searchbox').keyup(function(){
+		 alert("adf");
 		
-	//});
+	});
 
 	
 
@@ -15,5 +15,5 @@ $(document).ready(function() {
 		console.log("sup");
 	}
 	*/
-
+});
 
