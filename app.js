@@ -371,7 +371,7 @@ function ensureAuthenticated(req, res, next) {
 
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 
 //From here on is the code from schot.io - prolly won't use it 
