@@ -55,4 +55,11 @@ userSchema.methods.validPassword = function(password) {
 
 // create the model for users and expose it to our app
 mongoose.model('User', userSchema);*/
-mongoose.connect( 'mongodb://heroku_app21925448:4p7tgven51i7j1at8uepeviji0@ds027809.mongolab.com:27809/heroku_app21925448' );
+var uri = 'mongodb://heroku_app21925448:4p7tgven51i7j1at8uepeviji0@ds027809.mongolab.com:27809/heroku_app21925448';
+mongoose.connect(uri);
+
+
+
+
+
+
