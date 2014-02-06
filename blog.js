@@ -8,6 +8,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 
 
 
+
 exports.deletedata = function(deleteid) {
 	Entry.findByIdAndRemove(deleteid, function(err, deleteed) {
 		console.log("deleteed");
@@ -35,16 +36,82 @@ exports.getMessages = function(username) {
 
 
 
-exports.getBlogEntries = function(opid) {
-	var list = [];
-    
-	Entry.find({'opid' : opid}, function(err, entries) {
+
+    exports.getBlogEntries = function(opid) {
+	var list12 =[];   
+
+
+	/*Entry.find({'opid' : opid}, function(err, entries) {
 			
-			
-            /*if (!err){ 
+			if(!err) {
+           console.log("adding");
+
+            entries.forEach( function(currentEntry){
+
+                
+                Comment.find({'postid' : currentEntry.id}, function(err2, comments){
+                     
+                    if(err2) {
+                        list12.push(currentEntry);
+                          console.log(third);
+
+                    }
+                    else {
+                        currentEntry.commentst = comments;
+                        list12.push(currentEntry);
+                    }
+
+
+                });
+
+               
+            });
+
+            }
+
+            else {
+                console.log("EEEERROOR");
+            }
+
+            //else {console.log("err");}
+            
+                
+          });
+    console.log(list12);
+    return list12;
+    */
+    Entry.find({'opid' : opid}, function(err, entries) {
+    if(!err) {
+        console.log("adding");
+        var length = entries.length;
+        entries.forEach( function(currentEntry){
+            list12.push(currentEntry);
+            length--;
+            if(length <= 0){
+                console.log(list12);
+                return list12;
+            }
+        });
+    }
+    else {
+        console.log("EEEERROOR");
+    }
+    //else {console.log("err");}
+});
+};
+
+
+
+	//console.log(list);
+   
+
+
+
+
+ /*if (!err){ 
                
 
-            	for(i = 0; i < entries.length; i++ ) {
+                for(i = 0; i < entries.length; i++ ) {
                     list.push(entries[i]);
                     //console.log(list[i-1]);
                     Comment.find({'postid': list[i].id},function(err2, comments){
@@ -72,34 +139,7 @@ exports.getBlogEntries = function(opid) {
                  }
             }*/
 
-            entries.forEach( function(currentEntry){
-                
-                Comment.find({'postid' : currentEntry.id}, function(err2, comments){
-                    if(err2) {
-                        list.push(currentEntry);
-                    }
-                    else {
-                        currentEntry.commentst = comments
-                        list.push(currentEntry);
-                    }
 
-                });
-
-
-            });
-            //else {console.log("err");}
-
-                
-          });
-	//console.log(list);
-	return list;
-
-
-
-
-
-
-};
 
 exports.getBlogEntriesALL = function() {
     var listALL = [];

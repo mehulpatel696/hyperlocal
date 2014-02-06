@@ -14,7 +14,8 @@
     "passport-google-oauth": "~0.1.5",
     "bcrypt": "*",
     "mongodb": "*",
-    "logfmt": "~0.20.0"
+    "logfmt": "~0.20.0",
+    "node-async" : "*"
   },
   "engines": {
     "node": "0.10.x"

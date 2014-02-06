@@ -179,7 +179,50 @@ app.get('/', function(req, res) {
 	}
 
 	else {
-		res.render('index',{title:"My Wall", entries:blogEngine.getBlogEntries(req.user.id), user:req.user});
+    var list12 = [];
+    Entry.find({'opid' : req.user.id}, function(err, entries) {
+      if(!err) {
+
+        console.log("adding");
+        var length = entries.length;
+        entries.forEach( function(currentEntry){
+           Comment.find({'postid' : currentEntry.id}, function(err2, comments){
+                     
+                    if(err2) {
+                          console.log("no comment");
+                         list12.push(currentEntry);
+                          length--;
+                          if(length <= 0){
+              res.render('index',{title:"My Wall", entries: list12, user:req.user}); 
+                          }
+
+                    }
+                    else {
+                        console.log("yes comment");
+                        currentEntry.commentst = comments;
+                        list12.push(currentEntry);
+                        length--;
+                        if(length <= 0){
+              res.render('index',{title:"My Wall", entries: list12, user:req.user});
+                        }
+                    }
+
+
+
+
+          });
+           
+                
+            
+        });
+    }
+    else {
+        console.log("EEEERROOR");
+    }
+  });
+    //var ans = blogEngine.getBlogEntries(req.user.id);
+    //console.log(ans);
+		
 	}
 });
 
@@ -225,7 +268,41 @@ app.get('/delete/:id', function(req, res) {
 
 app.get('/feed', function(req, res){
 
-	res.render('feed', {title : "News Feed", entries: blogEngine.getBlogEntriesALL(), user: req.user})
+
+  var list12 = [];
+  Entry.find(function(err, entries) {
+    if(!err) {
+      console.log("adding");
+      var length = entries.length;
+      entries.forEach( function(currentEntry){
+        Comment.find({'postid' : currentEntry.id}, function(err2, comments){
+
+          if(err2) {
+            console.log("no comment");
+            list12.push(currentEntry);
+            length--;
+            if(length <= 0){
+              res.render('feed', {title : "News Feed", entries: list12, user: req.user});
+            }
+
+          }
+          else {
+            console.log("yes comment");
+            currentEntry.commentst = comments;
+            list12.push(currentEntry);
+            length--;
+            if(length <= 0){
+              res.render('feed', {title : "News Feed", entries: list12, user: req.user});
+            }
+          }
+        });
+      });
+    }
+    
+    //var ans = blogEngine.getBlogEntries(req.user.id);
+    //console.log(ans);
+    
+  });
 
 });
 

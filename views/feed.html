@@ -78,21 +78,21 @@
 		Published: {{published}} 
 		BY : {{username}}
   
-<a href="/delete/{{id}}"id="link1"> Delete</a> 
-	<form method="post" action="/comment" accept-charset="UTF-8"  >
-		<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
-		<input type="text"  name="comment" id="comment" placeholder="Reply"/>
-		<input type="submit" class="button" ></input>
 		
-	</form>
-</p>
-{{/each}}
+		<form method="post" action="/comment" accept-charset="UTF-8"  >
+			<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
+			<input type="text"  name="comment" id="comment" placeholder="Reply"/>
+			<input type="submit" class="button" ></input>
+		
+		</form>
+	</p>
+	{{/each}}
 	</div>
 	
 </div>
-{{else}}
-	<p> No posts yet</p>
-{{/if}}
+	{{else}}
+		No Posrts Yet. <a href="/feed"> Refresh</a>
+	{{/if}}
 {{else}}
 	<p> How did you get here/ go to <a href="/loginform">Log in </p>
 {{/if}}
