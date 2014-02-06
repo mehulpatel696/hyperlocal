@@ -181,7 +181,8 @@ app.get('/', function(req, res) {
 	else {
     var list12 = [];
     Entry.find({'opid' : req.user.id}, function(err, entries) {
-      if(!err) {
+      console.log(entries);
+      if(entries.length != 0) {
 
         console.log("adding");
         var length = entries.length;
@@ -217,7 +218,7 @@ app.get('/', function(req, res) {
         });
     }
     else {
-        console.log("EEEERROOR");
+        res.render('index',{title:"My Wall", entries: list12, user:req.user});
     }
   });
     //var ans = blogEngine.getBlogEntries(req.user.id);
