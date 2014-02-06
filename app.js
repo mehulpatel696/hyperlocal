@@ -401,7 +401,7 @@ app.post('/login', function(req, res, next) {
 		failureFlash : true // allow flash messages
 	}));
 */
-app.post('/signup', function(req, res){
+/*app.post('/signup', function(req, res){
 	var mehul = false;  
 	User.find({username : req.body.username}, function(err, user){
 		
@@ -414,11 +414,72 @@ app.post('/signup', function(req, res){
 								if(!err) {console.log(user);
 								res.redirect('/loginform');}
 
-								else {console.log("Error");}
+								else {
+                  res.render('signup', {message : "Email/Username already taken"});
+                }
 						});
 
 		});
 });
+
+
+*/
+
+app.post('/signup', function(req, res){
+  var mehul = false;  
+  User.find({username : req.body.username}, function(err, user){
+    
+  console.log(user.length);
+    
+    if(user.length != 0) {
+
+       res.render('signup', {message : "Username is taken"});
+         
+
+            }
+    else {
+      User.find({email : req.body.email}, function(err2, user2) {
+
+        if(user2.length == 0) {
+
+           new User  ({
+            "username" : req.body.username,
+            "email" : req.body.email,
+            "password" : req.body.password
+              }).save(function(err, user) {
+                if(!err) {console.log(user);
+                res.redirect('/loginform');}
+
+                else {
+                  res.render('signup', {message : "Something went wrong, try again. "});
+                }
+            });
+
+        }
+
+
+        else {
+          res.render('signup', {message : "Email is registered"});
+
+        }
+
+
+      });
+      ///
+     
+
+    }
+
+    });
+
+
+
+
+
+
+});
+
+
 
 
 
