@@ -6,6 +6,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="inbox.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<link href="/dist/css/bootstrap.css" rel="stylesheet">
+
 
 <div id="header" class="skel-panels-fixed">
 
@@ -21,9 +23,9 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-home">Info</span></a></li>
+								<li><a href="/myinfo" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Info</span></a></li>
+								<li><a href="/" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Posts</span></a></li>
 								<li><a href="/feed" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Feed</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">Posts</span></a></li>
 								<li><a href="/inbox" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Inbox</span></a></li>
 								<li><a href="/logout" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Logout</span></a></li>
 							</ul>
@@ -67,6 +69,8 @@
 </div>
 <br>
 {{/each}}
+
+
 </div>
 
 {{else}}

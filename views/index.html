@@ -1,11 +1,11 @@
 
 {{#if user}}
-
+ <link href="/dist/css/bootstrap.css" rel="stylesheet">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="app.js"></script>
-<h1>Blog!</h1>
+<script type="text/javascript" src="app.js"></script>s
+
 <div id="header" class="skel-panels-fixed">
 
 				<div class="top">
@@ -20,9 +20,9 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-home">Info</span></a></li>
+								<li><a href="/myinfo" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Info</span></a></li>
+								<li><a href="/" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Posts</span></a></li>
 								<li><a href="/feed" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Feed</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">Posts</span></a></li>
 								<li><a href="/inbox" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Inbox</span></a></li>
 								<li><a href="/logout" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Logout</span></a></li>
 							</ul>
@@ -59,10 +59,10 @@
 <!--<a href="/login"> Sing in </a>-->
 
 <div id="feed">
-
+<br>
 {{#each entries}}
-<div id="theposts2">
-<p id="theposts" class="theposts1">
+	<div id="theposts2">
+	<p id="theposts" class="theposts1">
 
 	<a href="/article/{{id}}" id="link1" >
 		<span id="type1">{{type}}</span> {{title}}   
@@ -77,18 +77,18 @@
 
 	Published: {{published}} OP: 
  
-<a href="/delete/{{id}}"id="link1"> Delete</a> 
-<form method="post" action="/comment" accept-charset="UTF-8"  >
+	<a href="/delete/{{id}}"id="link1"> Delete</a> 
+	<form method="post" action="/comment" accept-charset="UTF-8"  >
 		<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
 		<input type="text"  name="comment" id="comment" placeholder="Reply"/>
 		<input type="submit" class="button"></input>
 		
 	</form>
-</p>
+	</p>
 
-<br>
-</div>
-<br>
+	<br>
+	</div>
+
 {{/each}}
 </div>
 

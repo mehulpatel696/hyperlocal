@@ -1,4 +1,5 @@
 
+
 //requiring the db.js file
 //plain old js
 
@@ -173,6 +174,7 @@ app.configure(function() {
 app.get('/', function(req, res) {
 
 	if(!req.user) {
+    
 	res.redirect('loginform');
 	}
 
@@ -234,7 +236,12 @@ app.get('/inbox', function(req, res){
 
 });
 
+app.get('/myinfo', function(req, res){
+  console.log(req.user);
 
+  res.render('myprofile', {title : "My Profile", user : req.user});
+
+});
 
 
 app.get('/loginform', function(req,res){

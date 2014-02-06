@@ -1,0 +1,56 @@
+{{#if user}}
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<link href="/dist/css/bootstrap.css" rel="stylesheet"/>
+
+<div id="header" class="skel-panels-fixed">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="avatar.jpg" alt="" /></span>
+							<h1 id="title">{{user.username}}</h1>
+							<span class="byline">Hyperspace Engineer</span>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="/myinfo" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Info</span></a></li>
+								<li><a href="/" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Posts</span></a></li>
+								<li><a href="/feed" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Feed</span></a></li>
+								<li><a href="/inbox" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Inbox</span></a></li>
+								<li><a href="/logout" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Logout</span></a></li>
+							</ul>
+						</nav>
+						
+				</div>
+				
+			
+</div>
+<!--<a href="/login"> Sing in </a>-->
+<br>
+	<br>
+<div id="feed">
+<h1> My Profile </h1>
+
+
+	<form method="post" action="/comment" accept-charset="UTF-8"  >
+		<b>Username </b>: {{user.username}}<br>
+		<b>Email</b> : {{user.email}}
+	</form>
+</p>
+
+	</div>
+	
+</div>
+
+{{else}}
+	<p> How did you get here/ go to <a href="/loginform">Log in </p>
+{{/if}}
+
