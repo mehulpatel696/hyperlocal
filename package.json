@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mehulpatel1228/hyperlocal.git"
+    "url": "https://github.com/mehulpatel1228/hyperlocalnew.git"
   },
   "keywords": [
     "example"
@@ -37,7 +37,7 @@
   "author": "Mehul Patel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mehulpatel1228/hyperlocal/issues"
+    "url": "https://github.com/mehulpatel1228/hyperlocalnew/issues"
   },
-  "homepage": "https://github.com/mehulpatel1228/hyperlocal"
+  "homepage": "https://github.com/mehulpatel1228/hyperlocalnew"
 }
