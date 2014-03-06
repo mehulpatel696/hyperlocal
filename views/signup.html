@@ -1,17 +1,16 @@
-
-<header id = "mainpage">
-	HyperLocal
-
-</header>
+<link rel="stylesheet" href="/dist/css/side-menu.css"/ >
+<br><br><br>
+ <div id="logo"> HYPERLOCAL </div>
 <form method="post" action="/signup" accept-charset="UTF-8" id="login">
- 	{{message}}
- 	<br>
-	<input id="uname" type="text" placeholder="username" name = "username" /> 
+	 <p id="loginDialogue" > SIGN UP </p>
+ 	<p id="theMessage"> {{message}} </p>
+ 	
+	<input class = "loginInput" id="uname" type="text" placeholder="username" name = "username" /> 
 	<br>
-	<input id="pword" type="email" placeholder="email" name="email" />
+	<input class = "loginInput"id="pword" type="email" placeholder="email" name="email" />
 	<br>
-	<input id="pword" type="text" placeholder="pass" name="password" />
+	<input class = "loginInput" id="pword" type="password" placeholder="pass" name="password" />
 	<br>
-	<input type="submit" class="button"/>
+	<input class = "loginInput2" type="submit" class="button"/>
 
 </form>

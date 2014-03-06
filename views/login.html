@@ -1,21 +1,74 @@
-<header id = "mainpage">
-	HyperLocal
-
-</header>
 
 
-<form method="post" action="/login" accept-charset="UTF-8" id="login">
-
- 	
-	<input id="uname" type="text" placeholder="username" name = "username" />  <br>
-	<input id="pword" type="password" placeholder="pass" name="password" /><br>
-	<input type="checkbox" id="cb" name="rememberme" value="Bike">Remember me<br>
-
-	
-	<input type="submit" class="button"/> or <a href="/signupform"> Sign Up </a>
-
-</form>
+<link rel="stylesheet" href="/dist/css/loin.css" />
+<link rel="stylesheet" href="/dist/css/side-menu.css"/ >
 
 
 
 
+
+
+
+
+
+<br><br><br><br><br>
+  
+  <div id="logo"> HYPERLOCAL </div>
+  <form method="post" action="/login" accept-charset="UTF-8" id="login">
+    <p id="loginDialogue" > LOG IN </p>
+   <input class = "loginInput" name="lat" id="lat" style="display:none" value=""></input>
+  <input class = "loginInput"  name="long" id="longi" style="display:none" value="" ></input>
+
+  <input class = "loginInput"  id="uname" type="text" placeholder="username" name = "username" />  <br>
+  <input class = "loginInput"  id="pword" type="password" placeholder="pass" name="password" /><br>
+  <input class = "loginIn"  type="checkbox" id="cb" name="rememberme" value="Bike"> Remember me<br><br>
+
+  
+    <input class = "loginInput2"  id="submit" type="submit" disabled class="button" /> </a><br>
+     <a id= "signupLink" href="/forgotpassword">Forogt Password</a>
+     <a id= "signupLink" href="/signupform">Dont have an account? Sign Up </a>
+
+   </form>
+
+
+<script src="/dist/js/loc.js" type="text/javascript"> </script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+
+var lat;
+var longi;
+var  x= document.getElementById("lat");
+var y =  document.getElementById("longi");
+
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+  }
+function showPosition(position)
+  {
+x.value= position.coords.latitude;
+y.value =  position.coords.longitude;	
+
+
+document.getElementById("submit").disabled = false;
+
+  }
+
+
+getLocation();
+
+
+
+
+//ar dist = {{distanceFromMe}}.substring(0,3);
+
+  
+
+
+
+</script>

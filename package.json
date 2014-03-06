@@ -15,7 +15,9 @@
     "bcrypt": "*",
     "mongodb": "*",
     "logfmt": "~0.20.0",
-    "node-async" : "*"
+    "node-async": "*",
+    "socket.io": "*",
+    "nodemailer": "~0.6.0"
   },
   "engines": {
     "node": "0.10.x"

@@ -1,0 +1,135 @@
+<html>
+<head>
+	<title>Chat with socket.io and node.js</title>
+	<style>
+		#chat{
+
+			height:500px;
+			padding: 5px;
+			background-color: white;
+			color: black;
+			font-weight: 20px;
+			font-family: Heveltica;
+
+		}
+		
+		#chatWrap{
+			float: left;
+			border: 1px #000 solid;
+		}
+		.error{
+			color: red;
+		}
+		.msg {
+			font-family: arial;
+			padding: 5px;
+
+		}
+	</style>
+</head>
+<body>
+	asdfasf
+	
+
+	<div id="contentWrap">
+		<div id="chatWrap">
+			<div id="chat"></div>
+			<form id="send-message">
+				<input size="35" id="message"></input>
+				<input type="submit"></input>
+			</form>
+		</div>
+		<div id="users"></div>
+	</div>
+	
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		jQuery(function($){
+			var socket = io.connect();
+			var $users = $('#users');
+			var $messageForm = $('#send-message');
+			var $messageBox = $('#message');
+			var $chat = $('#chat');
+			var user = "{{user.username}}";
+			
+			
+				
+				socket.emit('new user', user , function(data){
+                    if(data) {
+                    console.log(user);
+					console.log(" New Added");
+                     }
+
+                    else {
+                        $chat.append("USER ALREADY HAS A TOKEN MOGO");
+
+                        console.log("Socket replacd, with new one! bruv")
+                    }
+				});
+				
+		socket.on('usernames', function(data){
+
+			if(data) {
+                var html = '';
+                for(var i=0; i < data.length; i++){
+                    html += data[i] + '<br/>'
+                }
+                $users.html(html);
+            }
+
+            else {
+            	console.log("USER EXISTS");
+            }
+            });
+            
+            $messageForm.submit(function(e){
+                e.preventDefault();
+                socket.emit('send message', $messageBox.val(), function(data){
+                    $chat.append('<span class="error">' + data + "</span><br/>");
+                });
+                $messageBox.val('');
+            });
+            
+            socket.on('load old msgs', function(docs){
+                $('#chat').empty();
+                for(var i=docs.length-1; i >= 0; i--){
+                    displayMsg(docs[i]);
+                }
+            });
+            
+            socket.on('new message', function(data){
+                displayMsg(data);
+            });
+            
+            function displayMsg(data){
+                $chat.append('<span class="msg"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+            }
+            
+            socket.on('whisper', function(data){
+
+
+            	if(data.nick === "{{user.username}}" ) {
+
+                $chat.append('<span class="msg"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+
+
+           		 }
+
+           		else if( data.nick === "{{reciever}}") {
+
+                $chat.append('<span class="msg"><b>' + data.nick + ': </b>' + data.msg + "</span><br/>");
+
+
+           		 }
+
+
+
+            });
+
+            
+
+        });
+	</script>
+</body>
+</html>

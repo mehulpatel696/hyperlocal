@@ -1,53 +1,191 @@
+<!doctype html>
+
 {{#if user}}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
 
 
+
+    <title>Side Menu &ndash; Layout Examples &ndash; Pure</title>
+
+    
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
 
-<link href="/dist/css/bootstrap.css" rel="stylesheet"/>
 
-<div id="header" class="skel-panels-fixed">
 
-				<div class="top">
 
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="avatar.jpg" alt="" /></span>
-							<h1 id="title">{{user.username}}</h1>
-							<span class="byline">Hyperspace Engineer</span>
-						</div>
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="/myinfo" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Info</span></a></li>
-								<li><a href="/" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-user">My Posts</span></a></li>
-								<li><a href="/feed" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-th">Feed</span></a></li>
-								<li><a href="/inbox" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Inbox</span></a></li>
-								<li><a href="/logout" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Logout</span></a></li>
-							</ul>
-						</nav>
-						
-				</div>
-				
+
+
+
+
+  
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/dist/css/side-menu.css">
+    <!--<![endif]-->
+  
+
+
+
+
+    
+
+    
+
+    
+
+</head>
+<body>
+
+
+
+
+
+
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu pure-menu-open">
+        	<a class="pure-menu-heading" href="#" style="border-bottom: solid 1px rgba(255,255,255,.8); font-size: 150%;border-right: solid 1px rgba(255,255,255,.8)">HyperLocal</a>
+
+
+            <a class="pure-menu-heading" href="#" style=" opacity: .7">{{user.username}}</a>
+
+            <ul>
+               	<li><a href="/myinfo" id="about-link" ><span class="fa fa-user">My Info</span></a></li>
+								<li><a href="/" id="about-link"><span class="fa fa-user">My Posts</span></a></li>
+								<li><a href="/feed" id="portfolio-link"><span class="fa fa-th">Feed</span></a></li>
+								<li><a href="/inbox" id="contact-link" ><span class="fa fa-envelope">Inbox</span></a></li>
+								<li><a href="/logout" id="contact-link"><span class="fa fa-envelope">Logout</span></a></li>
+								<br><br><br><br><br><br><br><br>
+
+
+								&nbspHyperLocal © 2014
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            
+            <span id="loc"> My Location: {{lati}}, {{longit}}</span>
+            <button id="showForm" class = "pure-button pure-button-primary" style="background: #191818"> Post a Request </button>
+            
+           	<div id="form" class"pure-form pure-form-stacked">
+			<form method="post" action="/getpost" accept-charset="UTF-8" id="postform" >
+
+ 					<input name="lat" id="lat" style="display:none" value={{lati}}></input>
+				 	<input name="long" id="long" style="display:none" value={{longit}}></input>
+				 	<br><br>
+ 					<select id="selecttag" name="typeans">
+  						<option value="I Need " name="need">I Need  * </option>
+ 						 <option value="I Have " name="have">I Have  </option>
+  					</select><br><br>
+					<input class = "entryInput" id="blogposttitle" type="text" placeholder="What do you need?" style="placeholder-color: white"name = "posttitle" /> <br><br>
+					<input class = "entryInput" id="thepost" type="text" placeholder="Details" name="postentry" /><br><br>
+					<input  class = "entryInput2" id="submitPost" type="submit" class="pure-button pure-button-primary"/>
+
+			</form>
+		    </div>
+        </div>
+        <br>
+        <br>
+        <div class="content" >
+
+        	<div id="myprof">
+
+        		<h1 > My Profile </h1>
+
+
 			
+				<b>Username </b>: {{user.username}}<br>
+				<b>Email</b> : {{user.email}}
+								{{numOfPosts}}
+			
+			</div>
+
+
+           
+
+            
+
+        </div>
+    </div>
 </div>
-<!--<a href="/login"> Sing in </a>-->
-<br>
-	<br>
-<div id="feed">
-<h1> My Profile </h1>
 
 
-	<form method="post" action="/comment" accept-charset="UTF-8"  >
-		<b>Username </b>: {{user.username}}<br>
-		<b>Email</b> : {{user.email}}
-	</form>
-</p>
 
-	</div>
-	
-</div>
+
+
+<script src="/dist/js/ui.js"></script>
+<script src="/dist/js/jquery.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+<script>
+
+//ar dist = {{distanceFromMe}}.substring(0,3);
+
+	var map = L.map('map').setView([{{lati}}, {{longit}}], 18);
+
+// add an OpenStreetMap tile layer
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+   	 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+   }).addTo(map);
+
+// add a marker in the given location, attach some popup content to it and open the popup
+
+
+	{{#each entries }}
+		{{#if lat}}
+			{{#if longi}}
+
+			L.marker([{{lat}}, {{longi}}]).addTo(map)
+   	   		 .bindPopup("{{title}} <br>This place is  about  miles from me")
+       		 .openPopup(); 
+
+       		{{/if}}
+       	{{/if}}
+
+      {{/each}}
+
+   
+
+
+ 	
+
+
+</script>
+
+
+
+
+
 
 {{else}}
 	<p> How did you get here/ go to <a href="/loginform">Log in </p>

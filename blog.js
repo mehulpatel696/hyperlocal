@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Entry = mongoose.model('Entry');
 var Comment = mongoose.model('Comment');
 var Message = mongoose.model('Message');
+var Chat = mongoose.model('Chate');
 var LocalStrategy   = require('passport-local').Strategy;
 
 
@@ -18,9 +19,9 @@ exports.deletedata = function(deleteid) {
 }
 
 exports.getMessages = function(username) {
-    var messages = [];
-
-    Message.find({'reciever' : username}, function(err, messages) {
+   
+     var messages = [];
+   Chat.find( { $or:[ {'reciever': username}, {'sender': username}]}, function(err, messages) {
 
         messages.forEach( function(message) {
 
@@ -261,7 +262,7 @@ exports.signup = function(passport) {
 
 				// if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser = new User();
 
                 // set the user's local credentials
                 newUser.local.email    = email;
@@ -280,6 +281,7 @@ exports.signup = function(passport) {
     }));
 
 };
+
 
 
 
