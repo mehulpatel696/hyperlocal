@@ -18,7 +18,8 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css"/>
+<link rel="stylesheet" href="dist/css/tag/tags.css" type="text/css" />
 
 
 
@@ -98,8 +99,9 @@
   						<option value="I Need " name="need">I Need  * </option>
  						 <option value="I Have " name="have">I Have  </option>
   					</select><br><br>
-					<input class = "entryInput" id="blogposttitle" type="text" placeholder="What do you need?" style="placeholder-color: white"name = "posttitle" /> <br><br>
-					<input class = "entryInput" id="thepost" type="text" placeholder="Details" name="postentry" /><br><br>
+					<input class = "entryInput" required id="blogposttitle" type="text" placeholder="What do you need?" style="placeholder-color: white"name = "posttitle" /> <br><br>
+					<input class = "entryInput" required id="thepost" type="text" placeholder="Details" name="postentry" /><br><br>
+          <input placeholder="Details"  type="text" id="tags" class="input" name="tag"  /><br><br>
 					<input  class = "entryInput2" id="submitPost" type="submit" class="pure-button pure-button-primary"/>
 
 			</form>
@@ -136,6 +138,7 @@
 
 <script src="/dist/js/ui.js"></script>
 <script src="/dist/js/jquery.js"></script>
+<script src="dist/js/tag/tags.js"></script> 
 
 
 </body>
@@ -151,30 +154,18 @@
 
 //ar dist = {{distanceFromMe}}.substring(0,3);
 
-	var map = L.map('map').setView([{{lati}}, {{longit}}], 18);
-
-// add an OpenStreetMap tile layer
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-   	 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-   }).addTo(map);
-
-// add a marker in the given location, attach some popup content to it and open the popup
-
-
-	{{#each entries }}
-		{{#if lat}}
-			{{#if longi}}
-
-			L.marker([{{lat}}, {{longi}}]).addTo(map)
-   	   		 .bindPopup("{{title}} <br>This place is  about  miles from me")
-       		 .openPopup(); 
-
-       		{{/if}}
-       	{{/if}}
-
-      {{/each}}
 
    
+
+//sample script to see if tags works
+  
+    $(function() {
+      $('#tags').tagbox({
+        url : ["api","blog","bootstrap","carousel","comments","configuration","content","css","database","date","drafts","email","experiment","fancybox","flickr","forum","google","html5","images","installation","jquery","js","json","kirbytext","language","maps","markdown","masonry","metatags","pagination","panel","plugin","releases","rss","search","security","server","tags","thumbnails","toolkit","tutorial","twitter","typography","uri","use case","videos","yaml"]
+      });
+    });
+
+      
 
 
  	

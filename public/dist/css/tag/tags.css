@@ -1,0 +1,186 @@
+@font-face
+{
+font-family: proxima;
+src: url(../fonts/proxima.otf);
+}
+@font-face
+{
+font-family: proximathin;
+src: url(../fonts/proximathin.otf);
+}
+
+@font-face
+{
+font-family: railway;
+src: url(../fonts/Raleway-Light.otf);
+}
+@font-face
+{
+font-family: railwaythin;
+src: url(../fonts/Raleway-Thin.otf);
+}
+
+@font-face
+{
+font-family: walkawaybold;
+src: url(../fonts/WalkawayBold.ttf);
+}
+
+@font-face
+{
+font-family: walkawaycond;
+src: url(../fonts/WalkwayCondensed.ttf);
+}
+
+
+@font-face
+{
+font-family: engel;
+src: url(../fonts/EngelLight.ttf);
+}
+
+
+/* autocomplete style */
+.autocomplete {
+  position: absolute;
+  padding-top: 5px;
+  z-index: 1000;
+ 
+  
+  font-family: "railwaythin";
+  
+}
+.autocomplete * {
+  padding: 0;
+  margin: 0;
+    background: transparent;
+ 
+}
+.autocomplete ul:before {
+  position: absolute;
+  top: -5px;
+  left: 10px;
+  content: "";
+  background: transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #222;
+ 
+}
+.autocomplete ul {
+  position: relative;
+  padding: 4px;
+  
+  color: #fff;
+  min-width: 150px;
+  
+    background: transparent;
+    border: solid 2px white;
+ 
+}
+.autocomplete li {
+  list-style: none;
+  text-align: left;
+  padding: 4px 50px 4px 10px;
+  cursor: pointer;
+  margin-bottom: 1px;
+
+  
+  
+}
+.autocomplete li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.autocomplete li.selected,
+.autocomplete li.over {
+  
+ 
+ 
+  color: #1F8DD6;
+  background: white;
+
+}
+
+
+/* tagbox styles */
+.tagbox {
+  position: relative;
+ 
+  font-family: "railwaythin";
+  border: 2px solid white;
+  background: transparent;
+}
+.tagbox * {
+  margin: 0;
+  padding: 0;
+}
+.tagbox.focus{  
+  outline: 0;
+}
+.tagbox ul {
+  overflow: hidden;
+  padding: 10px 10px 6px 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: rgba(0,0,0,.07) 0px 2px 4px inset;
+  -moz-box-shadow: rgba(0,0,0,.07) 0px 2px 4px inset;
+  box-shadow: rgba(0,0,0,.07) 0px 2px 4px inset;
+}
+.tagbox li {
+  position: relative;
+  list-style: none;
+  float: left;  
+  cursor: pointer;
+  margin: 0 4px 4px 0;
+}
+.tagbox li.new input {
+  font-family: Arial, sans-serif;
+  border: none;
+  display: block;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  background: none;
+}
+.tagbox li.new input:focus {
+  outline: none;
+}
+.tagbox li .tag {
+  position: relative;
+  display: block;
+  background: transparent;
+  color: #fff;
+  border-radius: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size-adjust: 100%;
+  font-size: 12px;
+  padding: 0 30px 0 12px;
+  vertical-align: middle;
+  border: solid 2px white; 
+}
+.tagbox li .delete {
+  position: absolute;
+  font-family: Arial, sans-serif;
+  right: 7px;
+  top: 4px;
+  color: #fff;
+  z-index: 100;
+  cursor: pointer;
+  color: #222;
+  background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAMAAACeL25MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////QkJCfEGH6wAAABRJREFUeNpiYGRgACEgBhMgBBBgAABkAAl7vFkJAAAAAElFTkSuQmCC) no-repeat center center;
+  width: 12px;
+  text-indent: -6000px;
+  font-size: 11px;
+  line-height: 12px;
+  height: 12px;
+  text-align: center;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+#tags {
+  font-family: "railwaythin";
+}

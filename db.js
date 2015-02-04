@@ -9,6 +9,7 @@ var Entry = new Schema({
 	"post": String,
 	"published": Date,
 	"position" : String,
+	"tags" : Array,
 	"opid" : String,
 	"username" : String,
 	"lat" : String,
@@ -72,8 +73,7 @@ userSchema.methods.validPassword = function(password) {
 
 // create the model for users and expose it to our app
 mongoose.model('User', userSchema);*/
-var uri = 'mongodb://heroku_app21925448:4p7tgven51i7j1at8uepeviji0@ds027809.mongolab.com:27809/heroku_app21925448';
-//var uri = 'mongodb://localhost/express-post'
+var uri = 'replace it with your databse uri'
 mongoose.connect(uri);
 
 

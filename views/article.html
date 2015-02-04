@@ -20,6 +20,7 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
 <link rel="stylesheet" href="/dist/css/side-menu.css">
+
     <!--<![endif]-->
  </head>
 <body>
@@ -61,24 +62,7 @@
         <div class="header" style="background-color: #21B6A8;">
             
             <span id="loc"> {{blog.title}} </span>
-            <button id="showForm" class = "pure-button pure-button-primary" style="background: #191818"> Post a Request </button>
             
-           	<div id="form" class"pure-form pure-form-stacked">
-			<form method="post" action="/getpost" accept-charset="UTF-8" id="postform" >
-
- 					<input name="lat" id="lat" style="display:none" value={{lati}}></input>
-				 	<input name="long" id="long" style="display:none" value={{longit}}></input>
-				 	<br><br>
- 					<select id="selecttag" name="typeans">
-  						<option value="I Need " name="need">I Need  * </option>
- 						 <option value="I Have " name="have">I Have  </option>
-  					</select><br><br>
-					<input class = "entryInput" id="blogposttitle" type="text" placeholder="What do you need?" style="placeholder-color: white"name = "posttitle" /> <br><br>
-					<input class = "entryInput" id="thepost" type="text" placeholder="Details" name="postentry" /><br><br>
-					<input  class = "entryInput2" id="submitPost" type="submit" class="pure-button pure-button-primary"/>
-
-			</form>
-		    </div>
         </div>
         <br>
         <br>
@@ -162,5 +146,12 @@
  	x.innerHTML = "No Map avaliable for this request - sorry!"
 
  {{/if}}
+
+
+//sample script to see if tags works
+  
+   
+            
+
 
 </script>

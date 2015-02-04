@@ -1,7 +1,7 @@
 <!doctype html>
 
 {{#if user}}
-<html lang="en">
+<html lang="en" style="background:white">
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,10 @@
 
     <title>Side Menu &ndash; Layout Examples &ndash; Pure</title>
 
-    
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset-fonts/reset-fonts.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/base/base-min.css">
+   
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
@@ -22,8 +25,10 @@
 
 
 
+<link rel="stylesheet" href="dist/css/tag/tags.css" type="text/css" />
 
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	
 
 
 
@@ -39,8 +44,8 @@
 
 
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
-    
 
     
 
@@ -98,9 +103,13 @@
   						<option value="I Need " name="need">I Need  * </option>
  						 <option value="I Have " name="have">I Have  </option>
   					</select><br><br>
-					<input class = "entryInput" id="blogposttitle" type="text" placeholder="What do you need?" style="placeholder-color: white"name = "posttitle" /> <br><br>
+					<input required class = "entryInput" id="blogposttitle" type="text" placeholder="What do you need/have?" style="placeholder-color: white"name = "posttitle" /> <br><br>
 					<input class = "entryInput" id="thepost" type="text" placeholder="Details" name="postentry" /><br><br>
-					<input  class = "entryInput2" id="submitPost" type="submit" class="pure-button pure-button-primary"/>
+					<input placeholder="Details" required type="text" id="tags" class="input" name="tag"  /><br><br>
+
+
+  		<input  class = "entryInput2" id="submitPost" type="submit" class="pure-button pure-button-primary"/>
+
 
 			</form>
 		    </div>
@@ -121,11 +130,12 @@
 								<p id="thecomment"> No Comments </p>
 							{{/if}}
 
-							Published: {{published}}  
+							Published: {{published}}  , Tags : {{tags}}
 							<a href="/delete/{{id}}"id="link1" style="color: grey"> Delete</a> 
 							<form method="post" action="/comment" accept-charset="UTF-8"  >
 							<input type="text" name="id" style = "display: none;" value = "{{id}}"/>
 							<input type="text"  name="comment" id="comment" class = "entryInput" placeholder="Reply"/>
+							<input type="text" name="page" value="index" style="display: none" />
 							<input type="submit"  class="entryInput2"></input>
 		
 						</form>
@@ -159,6 +169,10 @@
 <script src="/dist/js/ui.js"></script>
 <script src="/dist/js/jquery.js"></script>
 
+<script src="dist/js/tag/tags.js"></script>  
+
+
+
 
 </body>
 </html>
@@ -171,35 +185,13 @@
 
 <script>
 
-//ar dist = {{distanceFromMe}}.substring(0,3);
+//sample script to see if tags works
+  
+    $(function() {
+      $('#tags').tagbox({
+        url : ["api","blog","bootstrap","carousel","comments","configuration","content","css","database","date","drafts","email","experiment","fancybox","flickr","forum","google","html5","images","installation","jquery","js","json","kirbytext","language","maps","markdown","masonry","metatags","pagination","panel","plugin","releases","rss","search","security","server","tags","thumbnails","toolkit","tutorial","twitter","typography","uri","use case","videos","yaml"]
+      });
+    });
 
-	var map = L.map('map').setView([{{lati}}, {{longit}}], 18);
-
-// add an OpenStreetMap tile layer
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-   	 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-   }).addTo(map);
-
-// add a marker in the given location, attach some popup content to it and open the popup
-
-
-	{{#each entries }}
-		{{#if lat}}
-			{{#if longi}}
-
-			L.marker([{{lat}}, {{longi}}]).addTo(map)
-   	   		 .bindPopup("{{title}} <br>This place is  about  miles from me")
-       		 .openPopup(); 
-
-       		{{/if}}
-       	{{/if}}
-
-      {{/each}}
-
-   
-
-
- 	
-
-
-</script>
+			
+  </script>

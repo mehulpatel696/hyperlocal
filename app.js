@@ -1,8 +1,10 @@
 
 // app.js
 // Created: Don't remember
-// Modified: 22 Feb 2014
+// Modified: 11 March 2014
 // Copyright Mehul Patel
+//The heart of the app
+//It is very beautiful - please be gentle with the code OR ELSE I KILL YOU! JK...no I AM NOT JOKING. THIS IS SERIOUS SHIT. LIKE FOREAL DOPE. s
 
 
 
@@ -10,7 +12,7 @@
 
 //requiring the db.js file --> majority of the schemas are defined in that files, except some due to technical reasons
 require('./db');
-require('./jquery')
+require('./jquery');
 //require('./leaflet');
 
 
@@ -39,6 +41,7 @@ var SALT_WORK_FACTOR = 10;
 var Schema = mongoose.Schema; 
 //node mailer api 
 var nodemailer = require("nodemailer");
+//initializes lat and loingi vars 
 var lat;
 var longi;
 
@@ -120,6 +123,7 @@ passport.serializeUser(function(user, done) {
   
 });
 
+//deserializes the user by tkaing in the token --> passport.js does all the work. All it requires is a function call, to the dersrializer. Duh!
 passport.deserializeUser(function(token, done) {
   User.findOne( {accessToken: token } , function (err, user) {
     done
@@ -169,6 +173,7 @@ app.use(express.session({ secret: 'keyboard cat' }));
 app.use( function (req, res, next) {
   if ( req.method == 'POST' && req.url == '/login' ) {
     if ( req.body.rememberme ) {
+      //implementation to remember the user("me") for Thirty days.
       req.session.cookie.maxAge = 2592000000; // 30*24*60*60*1000 Rememeber 'me' for 30 days
     } else {
       req.session.cookie.expires = false;
@@ -216,33 +221,73 @@ function distance(lat, longi, lat2, lon2) {
 
 //Algo to sort the list returend from the query to the db. 
 function sortlist12(list12) {
+
+  console.log("/////////////////////////////////////POSTS SINCE YESTERDAY//////////////////////////////");
+  console.log(list12);
+   console.log("/////////////////////////////////////ENDD//////////////////////////////");
   var list13 = [];
+  //loops through the passed in list, finds the straight line distance between the post's location and the current users location and sets the distance equalt the latlongsub field 
   for(var i = 0; i < list12.length; i++) {
-     list12[i].latlongsub = distance(lat, longi, list12[i].lat, list12[i].longi);
-     console.log(list12[i].latlongsub);
+    //sets the straing line distance between two points as latlongsub
+    list12[i].latlongsub = distance(lat, longi, list12[i].lat, list12[i].longi);
+     //console.log(list12[i].latlongsub);
   }
-  for(var j = 0; j < list12.length; j ++) {
-    var min = 10000000;
-    for(var k = 0; k  < list12.length; k++) {
+
+  console.log("//after lat sub set");
+  console.log(list12);
+
+  var min = 10000000;
+  var list12LenBeforeSplice = list12.length;
+  for(var j = 0; j < list12LenBeforeSplice; j++) {
+
+    //finds the closest post-> to help arrnge in ascending order 
+    
+   for (var k = 0; k  < list12.length; k++) {
+
       if(list12[k].latlongsub <= min) {
+
         min = list12[k].latlongsub;
       }
+
     }
-    for(var j = 0; j < list12.length; j++) {
-      console.log("sdf");
+
+    
+    for(var z = 0; z < list12.length; z++) {
       console.log(min);
-      console.log(list12[j].latlongsub);
-      if(list12[j].latlongsub == min) {
-        console.log("af")
-        if(list12[j].latlongsub <= 1) {
-          list13.push(list12[j]);
+     
+      //console.log(min);
+      //console.log(list12[z].latlongsub);
+      console.log("comparing mins and lat long som");
+      console.log(list12);
+      console.log(min);
+
+      if(list12[z].latlongsub == min) {
+        console.log("//min");
+        console.log(list12[z]);
+        
+        if(list12[z].latlongsub <= 1) {
+          console.log(list12[z]);
+          list13.push(list12[z]);
         }
-        list12.splice(j, 1);
-        console.log(list13);
-      }
-    }
-  } 
+          
+          list12.splice(z, 1);
+          console.log(list12);
+          console.log(list12.length);
+
+          console.log("^^^^^^^^^^^^^^$#@@@@@@@@@@@@@@@@@@SPLICE!@%#$$$$");
+         
+
+        //console.log(list13);
+      }//closes the if statement
+    }//closes the nested for loop
+    //reset min to a stupid high value to so the next time it loops throught it can be set to a lower value in the loop and not be lower than its previous
+    min = 10000000000000;
+  }//closes the parent for loop 
+  console.log("/////////////////////////////////////POSTS SINCE YESTERDAY THAT ARE CLOSE TO ME BO //////////////////////////////");
+  console.log(list13);
+   console.log("/////////////////////////////////////ENDD//////////////////////////////");
   return list13;
+  
 }
 
 /*function getPlace() {
@@ -310,9 +355,12 @@ app.get('/feed', function(req, res){
   var list12 = [];
   //look for posts posted by everyone since yesterday
   Entry.find({'published' : {"$gte" : date3} }, function(err, entries) {
+    console.log(entries);
     if(!err) {
-      var length = entries.length;
-      entries.forEach( function(currentEntry){
+
+      if(entries.length != 0 ) {
+       var length = entries.length;
+       entries.forEach( function(currentEntry){
         //find comments
         Comment.find({'postid' : currentEntry.id}, function(err2, comments){
           //check if they have comments
@@ -322,17 +370,17 @@ app.get('/feed', function(req, res){
             length--;
             //if no don't do enything to json object --> call sort to 
             if(length <= 0){
-              res.render('feed', {title : "News Feed", entries: sortlist12(list12), user: req.user});
+              res.render('feed', {title : "News Feed", entries: sortlist12(list12), user: req.user, lati : lat, longit : longi});
             }
           }
           else {
             //if yes add to JSON object and  call the sort algorithm to sort the data. 
-            console.log("yes comment");
+           // console.log("yes comment");
             currentEntry.commentst = comments;
             list12.push(currentEntry);
             length--;
             if(length <= 0){
-              res.render('feed', {title : "News Feed", entries: sortlist12(list12), user: req.user});
+              res.render('feed', {title : "News Feed", entries: sortlist12(list12), user: req.user,lati : lat, longit : longi});
             }
             //end ofthe else block 
           }
@@ -340,8 +388,18 @@ app.get('/feed', function(req, res){
         });
         //end of the entries.forEach loop block
       });
+      //end of if(entries.length) if block
+      }
+      else {
+         res.render('feed', {title : "News Feed", user: req.user,lati : lat, longit : longi});
+
+      }
       //end of the first if block
     }
+      //if NO entires do this
+    else {
+         res.render('feed', {title : "News Feed", user: req.user,lati : lat, longit : longi});
+          }//end of the else block
     //end of Entry.find() block
   });
   //If you don't know what this end's. You should die in a hole, never to be seen every again. And if you dare resurface on the face of this eary, I will find you and I will almost kill you. Almost, is the key word. But after that I will teach you a lesson unlike anyother. Guess MOTHA FUCKHA!
@@ -410,7 +468,7 @@ app.get('/myinfo', function(req, res){
 }
   console.log(req.user);
 
-  res.render('myprofile', {title : "My Profile", user : req.user, numOfPosts : calcAmt() });
+  res.render('myprofile', {title : "My Profile", user : req.user, numOfPosts : calcAmt(), lati : lat, longit : longi });
 
 });
 
@@ -425,12 +483,15 @@ app.get('/signupform', function(req, res){
 });
 
 //gets info from form -- saves to db. If successful redirects to index, if not tells you to GTFO!!!
-app.post('/getpost', function(req, res) {new Entry({
+app.post('/getpost', function(req, res) {
+  console.log(req.body.tag);
+  new Entry({
     //assigns all elements to the JSON object keys 
 		"type" : req.body.typeans,//req.body.typeans.options[typeans.selectedIndex].value,
 		"title" : req.body.posttitle,
 		"post" : req.body.postentry,
 		"published": Date.now(),
+    "tags" : req.body.tag.split(","),
 		"opid" :  req.user.id,
 		"username" : req.user.username,
     "lat" : req.body.lat,
@@ -438,6 +499,7 @@ app.post('/getpost', function(req, res) {new Entry({
     "latlongsub": req.body.lat - req.body.long
 	}).save(function(err, todo, count){
     //once saved redirect to index
+    console.log(todo);
 		res.redirect('/');
 		;
 	});
@@ -456,14 +518,23 @@ app.post('/comment', function(req, res) {
 		"postid" : req.body.id,
 		"posteruname": req.user.username
   }).save(function(err, todo, count){
-    res.redirect('/feed');
-		console.log(todo);
+      if(req.body.page == "index") {
+        res.redirect('/');
+      }
+
+      else {
+
+       res.redirect('/feed');
+		   console.log(todo);
+
+     }
 	});
 
 
 });
 
 
+//This is the invite code system -> it doesn't work right now still need to implement it very wil 
 var InviteCode = mongoose.model("inviteCode");
 new InviteCode({
     code : "axfertlsdf124dk3"
@@ -476,6 +547,8 @@ new InviteCode({
   }
 
 });
+
+//processes the code on the back-end 
 app.post("/processcode", function(req, res) {
 
     InviteCode.find({code : req.body.invitecode}, function(err, code) {
@@ -497,7 +570,7 @@ app.post("/processcode", function(req, res) {
 //USER AUTHENTICATION
 
 
-
+//renders the login-page  -> authenticates the user 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
@@ -551,19 +624,21 @@ app.post('/login', function(req, res, next) {
 
 */
 
+//send emaili function to the new users 
 function sendEMail(to,from, subject, text ) {
 
 
-
+//creates the transport JSON Object 
 var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-        user: "lodo1928@gmail.com",
-        pass: "lionandtiger12"
+        user: "your gmail email",
+        pass: "your gmail pass"
     }
 });
 
 // setup e-mail data with unicode symbols
+
 var mailOptions = {
     from: "HyperLocal <foo@blurdybloop.com>", // sender address
     to: to, // list of receivers
@@ -586,6 +661,8 @@ smtpTransport.sendMail(mailOptions, function(error, response){
 
 
 }
+
+//renders the sign up page-> does auth before signung up. If successfull redirects to the login page
 app.post('/signup', function(req, res){
    
   User.find({username : req.body.username}, function(err, user){
@@ -594,6 +671,7 @@ app.post('/signup', function(req, res){
     
     if(user.length != 0) {
 
+      //if usrname is already registered 
        res.render('signup', {message : "Username is taken"});
          
 
@@ -612,6 +690,7 @@ app.post('/signup', function(req, res){
             "password" : req.body.password
            
               }).save(function(err, user) {
+                //sending eamil 
                 if(!err) {console.log(user);
                 sendEMail(req.body.email, "mehulpatel696@yahoo.com", "Thank You Signing up for HyperLocal!", "Please click on the invisible activation link brohter!");
                 res.redirect('/loginform');}
@@ -625,27 +704,20 @@ app.post('/signup', function(req, res){
 
         }
         else {
+          //if email is reigsterd 
           res.render('signup', {message : "Email is registered"});
 
         }
 
 
       });
-      ///
-     
-
     }
 
     });
 
-
-
-
-
-
 });
 
-
+//Forogt password set up -> doesn't work as well. Need to implement it better. 
 app.get('/forgotpassword', function(req, res) {
 
     res.render('fpass');
@@ -653,6 +725,8 @@ app.get('/forgotpassword', function(req, res) {
    
 });
 
+
+//same story  -> doesn't work rn. 
 app.post('/recoverPassword', function(req, res) {
 
   console.log(req.body);
@@ -669,12 +743,13 @@ app.post('/recoverPassword', function(req, res) {
     
 });
 
-
+//Logs the users out, revokes the token
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/loginform');
 });
 
+//a function to enusre that a user is logged in 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
@@ -790,66 +865,17 @@ app.post('/getmessage', function(req, res) {
 
 
 // creavar users = {};
+
+//actually creating a server now
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
 users = {};
 
+
+
+//the follwoing in the code for chat -> I won't comment it for a while because I need to fix it. It will be fixed soon. s
 app.get('/inboxtest/:posteruname', function(req,res){
-  console.log( req.user);
-    var Chat = mongoose.model('Chate');
-
-
-
-
-io.sockets.on('connection', function(socket){
-  var query = Chat.find({});
-  query.sort('-created').limit(8).exec(function(err, docs){
-    if(err) throw err;
-    socket.emit('load old msgs', docs);
-  });
-  
-  socket.on('new user', function(data, callback){
-    if (data in users){
-      callback(false);
-    } else{
-      console.log(users);
-      callback(true);
-      socket.nickname = req.user.username;
-      users[socket.nickname] = socket;
-      updateNicknames();
-      console.log(users);
-    }
-  });
-  
-  function updateNicknames(){
-    io.sockets.emit('usernames', Object.keys(users));
-  }
-
- socket.on('send message', function(data, callback){
-    /*var msg = data.trim();
-    
-    var name = req.params.posteruname;
-      
-      if(name in users){
-       users[name].emit('whisper', {msg: msg, nick: socket.nickname});
-       users[req.user.username].emit('whisper', {msg: msg, nick: socket.nickname});
-    } 
-    else{
-       callback('Error!  Enter a valid user.');
-    }
-      */
-
-
-    
-  });
-  
-  socket.on('disconnect', function(data){
-    if(!socket.nickname) return;
-    delete users[req.user.username];
-    updateNicknames();
-  });
-});
 
 
       res.render('inboxtest', {title : "Messages", messages:blogEngine.getMessages(req.user.username), user: req.user, reciever: req.params.posteruname});
@@ -860,7 +886,8 @@ io.sockets.on('connection', function(socket){
 
 
 
-server.listen(*process.env.PORT || 3000);
+//listens at a  specified prot 
+server.listen(process.env.PORT || 3000);
 
 
 //app.listen(/*process.env.PORT ||*/ 3000);
